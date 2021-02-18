@@ -3,23 +3,18 @@ import 'package:logger/src/logger.dart';
 
 /// Logs simultaneously to multiple [LogOutput] outputs.
 class MultiOutput extends LogOutput {
-  late List<LogOutput> _outputs;
+  List<LogOutput> _outputs;
 
-  MultiOutput(List<LogOutput?>? outputs) {
+  MultiOutput(List<LogOutput> outputs) {
     _outputs = _normalizeOutputs(outputs);
   }
-  List<LogOutput> _normalizeOutputs(List<LogOutput?>? outputs) {
-    final normalizedOutputs = <LogOutput>[];
 
-    if (outputs != null) {
-      for (final output in outputs) {
-        if (output != null) {
-          normalizedOutputs.add(output);
-        }
-      }
-    }
+  List<LogOutput> _normalizeOutputs(List<LogOutput> outputs) {
+    if (outputs == null) return [];
 
-    return normalizedOutputs;
+    outputs.removeWhere((o) => o == null);
+
+    return outputs;
   }
 
   @override
