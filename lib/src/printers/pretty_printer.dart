@@ -249,9 +249,10 @@ class PrettyPrinter extends LogPrinter {
     }
 
     var emoji = _getEmoji(level);
-    for (var line in message.split('\n')) {
-      buffer.add(color('$verticalLine $emoji$line'));
-    }
+    final pattern = new RegExp('.{1,1024}'); // 1024 is the size of each chunk
+    pattern
+        .allMatches(message)
+        .forEach((line) => buffer.add(color('$verticalLine $emoji$line')));
     buffer.add(color(_bottomBorder));
 
     return buffer;
