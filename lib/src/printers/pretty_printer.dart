@@ -34,7 +34,7 @@ class PrettyPrinter extends LogPrinter {
   };
 
   static final levelPrefix = {
-    Level.verbose: AnsiColor.txt(""),
+    Level.verbose: AnsiColor.txt("VERBOSE "),
     Level.debug: AnsiColor.txt("  DEBUG "),
     Level.info: AnsiColor.txt("   INFO "),
     Level.warning: AnsiColor.txt("WARNING "),
