@@ -62,6 +62,7 @@ class PrettyPrinter extends LogPrinter {
   final bool prefix;
   final bool printEmojis;
   final bool printTime;
+  final bool isNeedBorder;
 
   String _topBorder = '';
   String _middleBorder = '';
@@ -75,6 +76,7 @@ class PrettyPrinter extends LogPrinter {
     this.prefix = false,
     this.printEmojis = true,
     this.printTime = false,
+    this.isNeedBorder = true,
   }) {
     _startTime ??= DateTime.now();
 
@@ -85,9 +87,11 @@ class PrettyPrinter extends LogPrinter {
       singleDividerLine.write(singleDivider);
     }
 
-    _topBorder = "$topLeftCorner$doubleDividerLine";
-    _middleBorder = "$middleCorner$singleDividerLine";
-    _bottomBorder = "$bottomLeftCorner$doubleDividerLine";
+    if (isNeedBorder) {
+      _topBorder = "$topLeftCorner$doubleDividerLine";
+      _middleBorder = "$middleCorner$singleDividerLine";
+      _bottomBorder = "$bottomLeftCorner$doubleDividerLine";
+    }
   }
 
   @override
