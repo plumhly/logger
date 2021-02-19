@@ -102,8 +102,15 @@ class PrettyPrinter extends LogPrinter {
 
     String stackTraceStr;
     if (event.stackTrace == null) {
-      if (methodCount > 0) {
-        stackTraceStr = formatStackTrace(StackTrace.current, methodCount);
+      if (event.level == Level.error) {
+        if (errorMethodCount > 0) {
+          stackTraceStr =
+              formatStackTrace(StackTrace.current, errorMethodCount);
+        }
+      } else {
+        if (methodCount > 0) {
+          stackTraceStr = formatStackTrace(StackTrace.current, methodCount);
+        }
       }
     } else if (errorMethodCount > 0) {
       stackTraceStr = formatStackTrace(event.stackTrace, errorMethodCount);
