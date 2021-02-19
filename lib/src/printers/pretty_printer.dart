@@ -67,6 +67,7 @@ class PrettyPrinter extends LogPrinter {
   String _topBorder = '';
   String _middleBorder = '';
   String _bottomBorder = '';
+  String _verticalLine = '';
 
   PrettyPrinter({
     this.methodCount = 2,
@@ -91,6 +92,7 @@ class PrettyPrinter extends LogPrinter {
       _topBorder = "$topLeftCorner$doubleDividerLine";
       _middleBorder = "$middleCorner$singleDividerLine";
       _bottomBorder = "$bottomLeftCorner$doubleDividerLine";
+      _verticalLine = verticalLine;
     }
   }
 
@@ -232,7 +234,7 @@ class PrettyPrinter extends LogPrinter {
       var errorColor = _getErrorColor(level);
       for (var line in error.split('\n')) {
         buffer.add(
-          color('$verticalLine ') +
+          color('$_verticalLine ') +
               errorColor.resetForeground +
               errorColor(line) +
               errorColor.resetBackground,
@@ -243,19 +245,19 @@ class PrettyPrinter extends LogPrinter {
 
     if (stacktrace != null) {
       for (var line in stacktrace.split('\n')) {
-        buffer.add('$color$verticalLine $line');
+        buffer.add('$color$_verticalLine $line');
       }
       buffer.add(color(_middleBorder));
     }
 
     if (time != null) {
-      buffer..add(color('$verticalLine $time'))..add(color(_middleBorder));
+      buffer..add(color('$_verticalLine $time'))..add(color(_middleBorder));
     }
 
     var emoji = _getEmoji(level);
     final pattern = new RegExp('.{1,116}'); // 1024 is the size of each chunk
     pattern.allMatches(message).forEach(
-        (match) => buffer.add(color('$verticalLine $emoji${match.group(0)}')));
+        (match) => buffer.add(color('$_verticalLine $emoji${match.group(0)}')));
     buffer.add(color(_bottomBorder));
 
     return buffer;
