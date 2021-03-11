@@ -99,7 +99,7 @@ class PrettyPrinter extends LogPrinter {
 
   @override
   List<String> log(LogEvent event) {
-    var tag = event.tag ?? '';
+    var tag = event.tag;
     var messageStr = stringifyMessage(event.message);
 
     String stackTraceStr;
@@ -241,7 +241,9 @@ class PrettyPrinter extends LogPrinter {
     var color = _getLevelColor(level);
     buffer.add(color(_topBorder));
 
-    buffer..add(color('$_verticalLine $_boldAnsi $tag'))..add(color(_middleBorder));
+    if (null != tag && tag.isNotEmpty) {
+      buffer..add(color('$_verticalLine $_boldAnsi $tag'))..add(color(_middleBorder));
+    }
 
     if (error != null) {
       var errorColor = _getErrorColor(level);

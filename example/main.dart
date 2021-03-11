@@ -15,7 +15,7 @@ void main() {
 }
 
 void demo() {
-  logger.d("TAG", 'Log message with 2 methods');
+  logger.d("", 'Log message with 2 methods');
 
   loggerNoStack.i("TAG", 'Info message',);
 
