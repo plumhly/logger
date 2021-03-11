@@ -242,7 +242,7 @@ class PrettyPrinter extends LogPrinter {
     buffer.add(color(_topBorder));
 
     if (null != tag && tag.isNotEmpty) {
-      buffer..add(color('$_verticalLine $_boldAnsi $tag'))..add(color(_middleBorder));
+      buffer..add(color('$_verticalLine 🌴$_boldAnsi $tag'))..add(color(_middleBorder));
     }
 
     if (error != null) {
