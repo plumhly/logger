@@ -15,15 +15,15 @@ void main() {
 }
 
 void demo() {
-  logger.d('Log message with 2 methods');
+  logger.d("TAG", 'Log message with 2 methods');
 
-  loggerNoStack.i('Info message');
+  loggerNoStack.i("TAG", 'Info message',);
 
-  loggerNoStack.w('Just a warning!');
+  loggerNoStack.w("TAG", 'Just a warning!', null, null);
 
-  logger.e('Error! Something bad happened', 'Test Error');
+  logger.e("TAG", 'Error! Something bad happened', 'Test Error', null);
 
-  loggerNoStack.v({'key': 5, 'value': 'something'});
+  loggerNoStack.v("TAG", {'key': 5, 'value': 'something'});
 
-  Logger(printer: SimplePrinter(colors: true)).v('boom');
+  Logger(printer: SimplePrinter(colors: true)).v("TAG", 'boom');
 }

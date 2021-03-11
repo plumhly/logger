@@ -22,7 +22,7 @@ class PrettyPrinter extends LogPrinter {
   static const middleCorner = '├';
   static const verticalLine = '│';
   static const doubleDivider = "─";
-  static const singleDivider = "┄";
+  static const singleDivider = "-";
 
   static final levelColors = {
     Level.verbose: AnsiColor.fg(AnsiColor.grey(0.5)),
@@ -68,6 +68,7 @@ class PrettyPrinter extends LogPrinter {
   String _middleBorder = '';
   String _bottomBorder = '';
   String _verticalLine = '';
+  String _boldAnsi = "\u001b[1m";
 
   PrettyPrinter({
     this.methodCount = 2,
@@ -98,6 +99,7 @@ class PrettyPrinter extends LogPrinter {
 
   @override
   List<String> log(LogEvent event) {
+    var tag = event.tag ?? '';
     var messageStr = stringifyMessage(event.message);
 
     String stackTraceStr;
@@ -129,6 +131,7 @@ class PrettyPrinter extends LogPrinter {
       timeStr,
       errorStr,
       stackTraceStr,
+      tag,
     );
   }
 
@@ -232,10 +235,13 @@ class PrettyPrinter extends LogPrinter {
     String time,
     String error,
     String stacktrace,
+    String tag,
   ) {
     List<String> buffer = [];
     var color = _getLevelColor(level);
     buffer.add(color(_topBorder));
+
+    buffer..add(color('$_verticalLine $_boldAnsi $tag'))..add(color(_middleBorder));
 
     if (error != null) {
       var errorColor = _getErrorColor(level);
