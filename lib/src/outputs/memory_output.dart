@@ -9,7 +9,7 @@ class MemoryOutput extends LogOutput {
   final int bufferSize;
 
   /// A secondary [LogOutput] to also received events.
-  final LogOutput secondOutput;
+  final LogOutput? secondOutput;
 
   /// The buffer of events.
   final ListQueue<OutputEvent> buffer;
@@ -26,7 +26,7 @@ class MemoryOutput extends LogOutput {
     buffer.add(event);
 
     if (secondOutput != null) {
-      secondOutput.output(event);
+      secondOutput!.output(event);
     }
   }
 }

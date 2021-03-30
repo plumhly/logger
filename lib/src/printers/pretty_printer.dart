@@ -53,7 +53,7 @@ class PrettyPrinter extends LogPrinter {
 
   static final stackTraceRegex = RegExp(r'#[0-9]+[\s]+(.+) \(([^\s]+)\)');
 
-  static DateTime _startTime;
+  static DateTime? _startTime;
 
   final int methodCount;
   final int errorMethodCount;
@@ -98,11 +98,11 @@ class PrettyPrinter extends LogPrinter {
   }
 
   @override
-  List<String> log(LogEvent event) {
+  List<String?> log(LogEvent event) {
     var tag = event.tag;
     var messageStr = stringifyMessage(event.message);
 
-    String stackTraceStr;
+    String? stackTraceStr;
     if (event.stackTrace == null) {
       if (event.level == Level.error) {
         if (errorMethodCount > 0) {
@@ -120,7 +120,7 @@ class PrettyPrinter extends LogPrinter {
 
     var errorStr = event.error?.toString();
 
-    String timeStr;
+    String? timeStr;
     if (printTime) {
       timeStr = getTime();
     }
@@ -135,7 +135,7 @@ class PrettyPrinter extends LogPrinter {
     );
   }
 
-  String formatStackTrace(StackTrace stackTrace, int methodCount) {
+  String? formatStackTrace(StackTrace? stackTrace, int methodCount) {
     var lines = stackTrace.toString().split("\n");
 
     var formatted = <String>[];
@@ -143,7 +143,7 @@ class PrettyPrinter extends LogPrinter {
     for (var line in lines) {
       var match = stackTraceRegex.matchAsPrefix(line);
       if (match != null) {
-        if (match.group(2).startsWith('package:logger')) {
+        if (match.group(2)!.startsWith('package:logger')) {
           continue;
         }
         var newLine = "#$count   ${match.group(1)} (${match.group(2)})";
@@ -180,7 +180,7 @@ class PrettyPrinter extends LogPrinter {
     String min = _twoDigits(now.minute);
     String sec = _twoDigits(now.second);
     String ms = _threeDigits(now.millisecond);
-    var timeSinceStart = now.difference(_startTime).toString();
+    var timeSinceStart = now.difference(_startTime!).toString();
     return "$h:$min:$sec.$ms (+$timeSinceStart)";
   }
 
@@ -193,7 +193,7 @@ class PrettyPrinter extends LogPrinter {
     }
   }
 
-  AnsiColor _getLevelColor(Level level) {
+  AnsiColor? _getLevelColor(Level level) {
     if (colors) {
       return levelColors[level];
     } else {
@@ -205,12 +205,12 @@ class PrettyPrinter extends LogPrinter {
     }
   }
 
-  AnsiColor _getErrorColor(Level level) {
+  AnsiColor? _getErrorColor(Level level) {
     if (colors) {
       if (level == Level.wtf) {
-        return levelColors[Level.wtf].toBg();
+        return levelColors[Level.wtf]!.toBg();
       } else {
-        return levelColors[Level.error].toBg();
+        return levelColors[Level.error]!.toBg();
       }
     } else {
       if (prefix) {
@@ -221,7 +221,7 @@ class PrettyPrinter extends LogPrinter {
     }
   }
 
-  String _getEmoji(Level level) {
+  String? _getEmoji(Level level) {
     if (printEmojis) {
       return levelEmojis[level];
     } else {
@@ -229,16 +229,16 @@ class PrettyPrinter extends LogPrinter {
     }
   }
 
-  List<String> _formatAndPrint(
+  List<String?> _formatAndPrint(
     Level level,
     String message,
-    String time,
-    String error,
-    String stacktrace,
-    String tag,
+    String? time,
+    String? error,
+    String? stacktrace,
+    String? tag,
   ) {
-    List<String> buffer = [];
-    var color = _getLevelColor(level);
+    List<String?> buffer = [];
+    var color = _getLevelColor(level)!;
     buffer.add(color(_topBorder));
 
     if (null != tag && tag.isNotEmpty) {
@@ -250,7 +250,7 @@ class PrettyPrinter extends LogPrinter {
       for (var line in error.split('\n')) {
         buffer.add(
           color('$_verticalLine ') +
-              errorColor.resetForeground +
+              errorColor!.resetForeground +
               errorColor(line) +
               errorColor.resetBackground,
         );

@@ -6,10 +6,10 @@ import 'package:logger/src/log_output.dart';
 
 /// Writes the log output to a file.
 class FileOutput extends LogOutput {
-  final File file;
+  final File? file;
   final bool overrideExisting;
   final Encoding encoding;
-  IOSink _sink;
+  late IOSink _sink;
 
   FileOutput({
     this.file,
@@ -19,7 +19,7 @@ class FileOutput extends LogOutput {
 
   @override
   void init() {
-    _sink = file.openWrite(
+    _sink = file!.openWrite(
       mode: overrideExisting ? FileMode.writeOnly : FileMode.writeOnlyAppend,
       encoding: encoding,
     );
